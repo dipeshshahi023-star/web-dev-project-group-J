@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Details - FitFlow</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/form.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="form-page">
+    <!-- Header with Logo -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="Image/Logo.jpeg" alt="FitFlow Logo" class="logo-img">
+                <h1>FitFlow</h1>
+            </div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="home.html#home">HOME</a></li>
+                    <li><a href="home.html#workouts">WORKOUTS</a></li>
+                    <li><a href="home.html#contact-us">CONTACT US</a></li>
+                    <li><a href="home.html#membership" class="btn-membership">BUY MEMBERSHIP</a></li>
+                    <li><a href="my-details.html">MY DETAILS</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Details Section -->
+    <section class="details-section">
+        <div class="form-container">
+            <div class="form-header">
+                <h2>My Details & Health Tracking</h2>
+                <p>Monitor your fitness progress and health metrics</p>
+            </div>
+
+            <!-- User Profile Section -->
+            <div class="profile-section">
+                <h3>User Profile</h3>
+                <div id="detailsContent" class="details-content">
+                    <!-- Details will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Health Metrics Section -->
+            <div class="health-metrics">
+                <h3>📊 Health Metrics</h3>
+                <div class="metrics-grid">
+                    <!-- Height -->
+                    <div class="metric-card">
+                        <label>Height</label>
+                        <div class="metric-value" id="heightValue">--</div>
+                        <div class="metric-input">
+                            <input type="number" id="heightInput" placeholder="cm" min="100" max="220">
+                            <button onclick="saveHealth('height')" class="btn-save">Save</button>
+                        </div>
+                    </div>
+
+                    <!-- Weight -->
+                    <div class="metric-card">
+                        <label>Weight</label>
+                        <div class="metric-value" id="weightValue">--</div>
+                        <div class="metric-input">
+                            <input type="number" id="weightInput" placeholder="kg" min="30" max="200" step="0.1">
+                            <button onclick="saveHealth('weight')" class="btn-save">Save</button>
+                        </div>
+                    </div>
+
+                    <!-- BMI -->
+                    <div class="metric-card">
+                        <label>BMI</label>
+                        <div class="metric-value" id="bmiValue">--</div>
+                        <div class="metric-status" id="bmiStatus"></div>
+                    </div>
+
+                    <!-- Calories Burned Today -->
+                    <div class="metric-card">
+                        <label>🔥 Calories Burned (Today)</label>
+                        <div class="metric-value" id="caloriesBurnedValue">0</div>
+                        <div class="metric-input">
+                            <input type="number" id="caloriesBurnedInput" placeholder="kcal" min="0">
+                            <button onclick="saveHealth('caloriesBurned')" class="btn-save">Log</button>
+                        </div>
+                    </div>
+
+                    <!-- Calories Intake Today -->
+                    <div class="metric-card">
+                        <label>🍽️ Calories Intake (Today)</label>
+                        <div class="metric-value" id="caloriesIntakeValue">0</div>
+                        <div class="metric-input">
+                            <input type="number" id="caloriesIntakeInput" placeholder="kcal" min="0">
+                            <button onclick="saveHealth('caloriesIntake')" class="btn-save">Log</button>
+                        </div>
+                    </div>
+
+                    <!-- Net Calories -->
+                    <div class="metric-card">
+                        <label>⚖️ Net Calories</label>
+                        <div class="metric-value" id="netCaloriesValue">0</div>
+                        <div class="metric-status" id="netCaloriesStatus"></div>
+                    </div>
+
+                    <!-- Workouts Done -->
+                    <div class="metric-card">
+                        <label>💪 Workouts Completed</label>
+                        <div class="metric-value" id="workoutCountValue">0</div>
+                        <div class="metric-input">
+                            <select id="workoutTypeSelect">
+                                <option>Select workout...</option>
+                                <option>Beginner</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+                                <option>Yoga</option>
+                                <option>Meditation</option>
+                                <option>Cardio</option>
+                            </select>
+                            <button onclick="logWorkout()" class="btn-save">Log</button>
+                        </div>
+                    </div>
+
+                    <!-- Water Intake -->
+                    <div class="metric-card">
+                        <label>💧 Water Intake (L)</label>
+                        <div class="metric-value" id="waterValue">0</div>
+                        <div class="metric-input">
+                            <input type="number" id="waterInput" placeholder="liters" min="0" step="0.25">
+                            <button onclick="saveHealth('water')" class="btn-save">Log</button>
+                        </div>
+                    </div>
+
+                    <!-- Sleep Duration -->
+                    <div class="metric-card">
+                        <label>😴 Sleep Duration (hours)</label>
+                        <div class="metric-value" id="sleepValue">--</div>
+                        <div class="metric-input">
+                            <input type="number" id="sleepInput" placeholder="hours" min="0" max="24" step="0.5">
+                            <button onclick="saveHealth('sleep')" class="btn-save">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workout History -->
+            <div class="workout-history">
+                <h3>📅 Recent Workouts</h3>
+                <div id="workoutHistoryList" class="history-list">
+                    <p>No workouts logged yet. Start your fitness journey today!</p>
+                </div>
+            </div>
+
+            <!-- Health Progress -->
+            <div class="health-progress">
+                <h3>📈 This Week's Progress</h3>
+                <div class="progress-stats">
+                    <div class="progress-item">
+                        <span>Total Workouts:</span>
+                        <strong id="weekWorkouts">0</strong>
+                    </div>
+                    <div class="progress-item">
+                        <span>Total Calories Burned:</span>
+                        <strong id="weekCaloriesBurned">0</strong>
+                    </div>
+                    <div class="progress-item">
+                        <span>Avg. Daily Calories:</span>
+                        <strong id="weekAvgCalories">0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button onclick="exportHealthData()" class="btn-export">📥 Export Data</button>
+                <button onclick="resetAllData()" class="btn-danger">🗑️ Clear All Data</button>
+                <a href="home.html" class="btn-cancel">Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 FitFlow. All rights reserved. | Build Your Best Self</p>
+    </footer>
+
+    <script src="js/details.js"></script>
+</body>
+</html>

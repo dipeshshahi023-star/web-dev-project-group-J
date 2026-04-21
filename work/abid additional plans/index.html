@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Plans - Fitness Programs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: #1a1a1a;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            border-bottom: 3px solid #a855f7;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .plans-section {
+            width: 100%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+            color: #a855f7;
+            font-weight: 700;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .plan-card {
+            background: #2d2d2d;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 2px solid #3a3a3a;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+            border-color: #a855f7;
+        }
+
+        .plan-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .plan-content {
+            padding: 25px;
+        }
+
+        .plan-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #a855f7;
+            font-weight: 600;
+        }
+
+        .plan-description {
+            color: #b0b0b0;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .plan-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .plan-button:hover {
+            opacity: 0.9;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: #2d2d2d;
+            margin: 10% auto;
+            padding: 30px;
+            border: 2px solid #ff6b35;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: #e0e0e0;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #a855f7;
+            padding-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            color: #a855f7;
+            font-size: 1.8rem;
+        }
+
+        .close {
+            color: #a855f7;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #c084fc;
+        }
+
+        .activity-item {
+            background: #1a1a1a;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #a855f7;
+        }
+
+        .activity-title {
+            color: #a855f7;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .activity-description {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .activity-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .activity-button:hover {
+            opacity: 0.9;
+        }
+
+        /* Alert Modal */
+        .alert-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .alert-content {
+            background-color: #2d2d2d;
+            margin: 20% auto;
+            padding: 40px;
+            border: 3px solid #a855f7;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            color: #e0e0e0;
+        }
+
+        .alert-content h2 {
+            color: #a855f7;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .alert-content p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #b0b0b0;
+        }
+
+        .alert-button {
+            background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        .alert-button:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-top: 3px solid #a855f7;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 30% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fitness Additional Plans</h1>
+        <p>Choose the perfect program for your fitness journey</p>
+    </header>
+
+    <div class="container">
+        <section class="plans-section">
+            <h2 class="section-title">Our Programs</h2>
+
+            <div class="plans-grid">
+                <!-- Yoga Card -->
+                <div class="plan-card">
+                    <img src="images/Yoga.jpg" alt="Yoga" class="plan-image">
+                    <div class="plan-content">
+                        <h3 class="plan-title">Yoga</h3>
+                        <p class="plan-description">
+                            Find inner peace and flexibility with our guided yoga sessions. Perfect for all levels, from beginners to advanced practitioners.
+                        </p>
+                        <a href="yoga.html" class="plan-button">Try Now</a>
+                    </div>
+                </div>
+
+                <!-- Pilates Card -->
+                <div class="plan-card">
+                    <img src="images/pilates.jpg" alt="Pilates" class="plan-image">
+                    <div class="plan-content">
+                        <h3 class="plan-title">Pilates</h3>
+                        <p class="plan-description">
+                            Strengthen your core and improve posture with targeted pilates workouts. Build lean muscle and enhance flexibility.
+                        </p>
+                        <a href="pilates.html" class="plan-button">Try Now</a>
+                    </div>
+                </div>
+
+                <!-- Meditation Card -->
+                <div class="plan-card">
+                    <img src="images/meditation.jpeg" alt="Meditation" class="plan-image">
+                    <div class="plan-content">
+                        <h3 class="plan-title">Meditation</h3>
+                        <p class="plan-description">
+                            Reduce stress and improve mental clarity through mindfulness meditation. Achieve balance in your daily life.
+                        </p>
+                        <a href="meditation.html" class="plan-button">Try Now</a>
+                    </div>
+                </div>
+
+                <!-- Cardio Card -->
+                <div class="plan-card">
+                    <img src="images/cardio.jpg" alt="Cardio" class="plan-image">
+                    <div class="plan-content">
+                        <h3 class="plan-title">Cardio</h3>
+                        <p class="plan-description">
+                            Boost your cardiovascular health with high-energy cardio workouts. Burn calories and build endurance.
+                        </p>
+                        <a href="cardio.html" class="plan-button">Try Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Fitness Programs. All rights reserved.</p>
+    </footer>
+</body>
+</html>
